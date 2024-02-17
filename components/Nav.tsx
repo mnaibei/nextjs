@@ -10,22 +10,6 @@ export default function Nav() {
   const [providers, setProviders] = useState(null);
   const [toggleDropdown, setToggleDropdown] = useState(false);
 
-  //   useEffect(() => {
-  //     const setProviders = async () => {
-  //       const providers = await getProviders();
-  //     //   setProviders();
-  //     };
-  //     // setProviders();
-  //   }, []);
-
-  // useEffect(() => {
-  //   const fetchProviders = async () => {
-  //     const providers = await getProviders();
-  //     setProviders(providers); // Call setProviders with the fetched data
-  //   };
-  //   fetchProviders(); // Call the function to fetch providers
-  // }, []);
-
   useEffect(() => {
     (async () => {
       const res = await getProviders();
