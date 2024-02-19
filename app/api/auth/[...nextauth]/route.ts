@@ -10,6 +10,7 @@ const handler = NextAuth({
       clientSecret: process.env.GOOGLE_CLIENT_SECRET ?? "",
     }),
   ],
+
   async session({ session }: { session: any }) {
     const sessionUser = await User.findOne({ email: session.user.email });
 
@@ -25,7 +26,7 @@ const handler = NextAuth({
       if (!userExists) {
         await User.create({
           email: profile.email,
-          username: profile.name.replace(/\s/g, ""),
+          username: profile.name.replace(/\s/g, "").toLowerCase(),
           image: profile.picture,
         });
       }

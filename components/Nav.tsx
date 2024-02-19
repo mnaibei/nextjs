@@ -46,7 +46,7 @@ export default function Nav() {
             </button>
             <Link href="/profile" className="flex-center">
               <Image
-                src="/assets/images/logo.svg"
+                src={session?.user.image || "/assets/images/logo.svg"}
                 alt="profile"
                 width={37}
                 height={37}
@@ -75,7 +75,7 @@ export default function Nav() {
         {session?.user ? (
           <div className="flex">
             <Image
-              src="/assets/images/logo.svg"
+              src={session?.user.image || "/assets/images/logo.svg"}
               alt="profile"
               width={37}
               height={37}
