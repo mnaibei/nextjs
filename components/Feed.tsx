@@ -10,7 +10,7 @@ const PromptCardList = ({
   handleTagClick: (tag: string) => void;
 }) => {
   return (
-    <div className="mt-16 prompt_layout border-2 border-green-500">
+    <div className="mt-16 prompt_layout">
       {data.map((post) => (
         <PromptCard
           key={post._id}
@@ -45,7 +45,7 @@ export default function Feed() {
   }, []);
 
   return (
-    <section className="feed border-2 border-red-500">
+    <section className="feed">
       <form className="relative w-full flex-center">
         <input
           type="text"

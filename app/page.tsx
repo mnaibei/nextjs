@@ -2,7 +2,7 @@ import Feed from "@components/Feed";
 
 export default function Home() {
   return (
-    <section className="w-full flex-center flex-col border-2 border-blue-500">
+    <section className="w-full flex-center flex-col">
       <h1 className="head_text text-center">
         Welcome to the prompt finder
         <br className="sm-md:hidden" />

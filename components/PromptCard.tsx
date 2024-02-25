@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { useRouter, usePathname } from "next/navigation";
+import { set } from "mongoose";
 
 const PromptCard = ({
   post,
@@ -13,8 +14,14 @@ const PromptCard = ({
   tag: any;
   handleTagClick: any;
 }) => {
-  console.log(post);
   const [copied, setCopied] = useState("");
+
+  const handleCopy = () => {
+    setCopied(post.prompt);
+    navigator.clipboard.writeText(post.prompt);
+    setTimeout(() => setCopied(""), 2000);
+  };
+
   return (
     <div className="prompt_card">
       <div className="flex justify-between items-5 gap-5">
@@ -35,7 +42,7 @@ const PromptCard = ({
             </p>
           </div>
         </div>
-        <div className="copy_btn" onClick={() => {}}>
+        <div className="copy_btn" onClick={handleCopy}>
           <Image
             src={
               copied === post.prompt
