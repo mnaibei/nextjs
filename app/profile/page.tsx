@@ -10,6 +10,8 @@ const Profile = () => {
   const [posts, setPosts] = useState("");
 
   console.log((session?.user as any)?.id);
+  //@ts-ignore
+  console.log(session?.user?.id);
 
   useEffect(() => {
     const fetchPosts = async () => {

@@ -22,16 +22,20 @@ const ProfileComponent = ({
       </h1>
       <p className="desc text-left">{desc}</p>
       <div className="mt-10 prompt_layout">
-        {/* {data.map((post: any) => (
-          <PromptCard
-            key={post._id}
-            post={post}
-            tag={post.tag}
-            handleTagClick={[]}
-            // handleEdit={handleEdit && handleEdit(post)}
-            // handleDelete={handleDelete && handleDelete(post)}
-          />
-        ))} */}
+        {data?.length > 0 ? (
+          data.map((post: any) => (
+            <PromptCard
+              key={post._id}
+              post={post}
+              tag={post.tag}
+              handleTagClick={[]}
+              // handleEdit={handleEdit && handleEdit(post)}
+              // handleDelete={handleDelete && handleDelete(post)}
+            />
+          ))
+        ) : (
+          <p>Loading...</p> // Replace this with your placeholder content
+        )}
       </div>
     </section>
   );
