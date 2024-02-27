@@ -29,8 +29,8 @@ const ProfileComponent = ({
               post={post}
               tag={post.tag}
               handleTagClick={[]}
-              // handleEdit={handleEdit && handleEdit(post)}
-              // handleDelete={handleDelete && handleDelete(post)}
+              handleEdit={() => handleEdit && handleEdit(post)}
+              handleDelete={() => handleDelete && handleDelete(post)}
             />
           ))
         ) : (

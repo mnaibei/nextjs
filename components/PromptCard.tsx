@@ -3,24 +3,32 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { useRouter, usePathname } from "next/navigation";
-import { set } from "mongoose";
 
 const PromptCard = ({
   post,
   tag,
   handleTagClick,
+  handleEdit,
+  handleDelete,
 }: {
   post: any;
   tag: any;
   handleTagClick: any;
+  handleEdit: any;
+  handleDelete: any;
 }) => {
   const [copied, setCopied] = useState("");
+  const { data: session } = useSession();
+  const pathName = usePathname();
+  const router = useRouter();
 
   const handleCopy = () => {
     setCopied(post.prompt);
     navigator.clipboard.writeText(post.prompt);
     setTimeout(() => setCopied(""), 2000);
   };
+
+  console.log(post);
 
   return (
     <div className="prompt_card">
@@ -33,12 +41,12 @@ const PromptCard = ({
             height={50}
             className="rounded-full"
           />
-          <div className="flex flex-col">
+          <div className="flex flex-col w-full">
             <h3 className=" font-satoshi text-gray-900 font-semibold">
               {post.creator.username}
             </h3>
             <p className="text-xs font-inter text-gray-500 ">
-              {post.creator.email}
+              created: {new Date(post.createdAt).toLocaleDateString()}
             </p>
           </div>
         </div>
@@ -61,6 +69,21 @@ const PromptCard = ({
         onClick={() => handleTagClick && handleTagClick(post.tag)}>
         {post.tag}
       </p>
+      {(session?.user as any)?.id === post.creator._id &&
+        pathName === "/profile" && (
+          <div className="mt-5 flex-center gap-4 border-t border-gray-100 pt-3">
+            <p
+              className="font-inter text-sm green_gradient cursor-pointer"
+              onClick={handleEdit}>
+              Edit
+            </p>
+            <p
+              className="font-inter text-sm orange_gradient cursor-pointer"
+              onClick={handleDelete}>
+              Delete
+            </p>
+          </div>
+        )}
     </div>
   );
 };
