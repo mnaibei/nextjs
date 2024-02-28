@@ -15,15 +15,15 @@ const Form = ({
 }) => {
   return (
     <section className="w-full max-w-full flex-start flex-col">
-      <h1 className="head_text text-left">{type} Post</h1>
-      <p className="desc text-left max-w-md">
+      <h1 className="head_text text-left dark:text-white">{type} Post</h1>
+      <p className="desc text-left max-w-md dark:text-white">
         {type} a prompt to share with the community.
       </p>
       <form
         onSubmit={handleSubmit}
         className="mt-10 w-full max-w-2xl flex flex-col gap-7 glassmorphism">
         <label>
-          <span className="font-satoshi font-semibold text-base text-gray-700">
+          <span className="font-satoshi font-semibold text-base text-gray-700 dark:text-white">
             Prompt
           </span>
           <textarea
@@ -35,7 +35,7 @@ const Form = ({
           />
         </label>
         <label>
-          <span className="font-satoshi font-semibold text-base text-gray-700">
+          <span className="font-satoshi font-semibold text-base text-gray-700 dark:text-white">
             Tag{" "}
             <span className="font-normal">
               eg:#product, #design, #development, #marketing
@@ -50,7 +50,7 @@ const Form = ({
           />
         </label>
         <div className="flex-end mx-3 mb-5 gap-4">
-          <Link href="/" className="text-gray-500 text-sm">
+          <Link href="/" className="text-gray-500 text-sm dark:text-white">
             Cancel
           </Link>
           <button

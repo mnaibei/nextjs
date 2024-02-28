@@ -42,15 +42,15 @@ const PromptCard = ({
             className="rounded-full"
           />
           <div className="flex flex-col w-full">
-            <h3 className=" font-satoshi text-gray-900 font-semibold">
+            <h3 className=" font-satoshi text-gray-900 font-semibold dark:text-white">
               {post.creator.username}
             </h3>
-            <p className="text-xs font-inter text-gray-500 ">
+            <p className="text-xs font-inter text-gray-500 dark:text-white ">
               created: {new Date(post.createdAt).toLocaleDateString()}
             </p>
           </div>
         </div>
-        <div className="copy_btn" onClick={handleCopy}>
+        <div className="copy_btn dark:bg-white" onClick={handleCopy}>
           <Image
             src={
               copied === post.prompt
@@ -63,9 +63,11 @@ const PromptCard = ({
           />
         </div>
       </div>
-      <p className="my-4 font-satoshi text-sm text-gray-700">{post.prompt}</p>
+      <p className="my-4 font-satoshi text-sm text-gray-700 dark:text-white">
+        {post.prompt}
+      </p>
       <p
-        className="font-inter text-sm blue_gradient cursor-pointer"
+        className="font-inter text-sm blue_gradient cursor-pointer dark:text-blue-500"
         onClick={() => handleTagClick && handleTagClick(post.tag)}>
         {post.tag}
       </p>
