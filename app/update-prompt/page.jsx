@@ -33,7 +33,7 @@ const EditPromptPage = () => {
     if (promptId) getPromptDetails();
   }, [promptId]);
 
-  const editPrompt = async (e: React.FormEvent<HTMLFormElement>) => {
+  const editPrompt = async (e) => {
     e.preventDefault();
     setSubmitting(true);
 
