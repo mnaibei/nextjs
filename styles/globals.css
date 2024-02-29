@@ -8,8 +8,7 @@
   Note: The styles for this gradient grid background is heavily inspired by the creator of this amazing site (https://dub.sh) – all credits go to them! 
 */
 
-.dark,
-.dropdown {
+.dark {
     background-color: #06304d;
 
 }
@@ -97,7 +96,7 @@
 }
 
 .outline_btn {
-    @apply rounded-full border border-black bg-transparent py-1.5 px-5 text-black transition-all hover:bg-black hover:text-white text-center text-sm font-inter flex items-center justify-center dark:text-white dark:border-white;
+    @apply rounded-full border border-black bg-transparent py-1.5 px-5 text-black transition-all hover:bg-black hover:text-white text-center text-sm font-inter flex items-center justify-center dark:text-white dark:border-white dark:hover:bg-green-500;
 }
 
 .head_text {

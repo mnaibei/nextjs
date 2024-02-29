@@ -59,7 +59,7 @@ const Profile = () => {
   return (
     <div>
       <ProfileComponent
-        name="user"
+        name="My"
         desc="This is my profile"
         data={posts}
         handleEdit={handleEdit}

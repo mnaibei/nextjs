@@ -18,10 +18,10 @@ const ProfileComponent = ({
   return (
     <section className="w-full">
       <h1 className="head_text text-left">
-        <span className="capitalize dark:text-white">{user} Profile</span>
+        <span className="capitalize dark:text-white">{name} Profile</span>
       </h1>
       <p className="desc text-left dark:text-white">{desc}</p>
-      <div className="mt-10 prompt_layout">
+      <div className="mt-10 prompt_layout mb-6">
         {data?.length > 0 ? (
           data.map((post: any) => (
             <PromptCard
@@ -34,7 +34,7 @@ const ProfileComponent = ({
             />
           ))
         ) : (
-          <p className="dark:text-white">Loading...</p> // Replace this with your placeholder content
+          <p className="dark:text-white">No data...</p>
         )}
       </div>
     </section>
