@@ -11,24 +11,33 @@ const PromptCardList = ({
 }) => {
   return (
     <div className="mt-16 prompt_layout">
-      {data.map((post) => (
-        // @ts-ignore
-        <PromptCard
-          key={post._id}
-          post={post}
-          tag={post.tag}
-          handleTagClick={handleTagClick}
-        />
-      ))}
+      {data.length > 0 ? (
+        data.map((post) => (
+          // @ts-ignore
+          <PromptCard
+            key={post._id}
+            post={post}
+            tag={post.tag}
+            handleTagClick={handleTagClick}
+          />
+        ))
+      ) : (
+        <p className="dark:text-white">Loading...</p>
+      )}
     </div>
   );
 };
 export default function Feed() {
   const [searchText, setSearchText] = useState("");
   const [posts, setPosts] = useState([] as any[]);
+  const [filteredPosts, setFilteredPosts] = useState([] as any[]);
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchText(e.target.value);
+  };
+
+  const handleTagClick = (tag: string) => {
+    setSearchText(tag);
   };
 
   useEffect(() => {
@@ -36,7 +45,6 @@ export default function Feed() {
       try {
         const res = await fetch("/api/prompt");
         const data = await res.json();
-        console.log(data);
         setPosts(data);
       } catch (error) {
         console.log(error);
@@ -45,8 +53,22 @@ export default function Feed() {
     fetchPosts();
   }, []);
 
+  useEffect(() => {
+    const filteredData = posts.filter((post) => {
+      // Check if the search text matches the tag, username, or content
+      return (
+        post.tag.toLowerCase().includes(searchText.toLowerCase()) ||
+        post.creator.username
+          .toLowerCase()
+          .includes(searchText.toLowerCase()) ||
+        post.prompt.toLowerCase().includes(searchText.toLowerCase())
+      );
+    });
+    setFilteredPosts(filteredData);
+  }, [posts, searchText]);
+
   return (
-    <section className="feed">
+    <section className="feed mb-6">
       <form className="relative w-full flex-center">
         <input
           type="text"
@@ -57,7 +79,7 @@ export default function Feed() {
           required
         />
       </form>
-      <PromptCardList data={posts} handleTagClick={() => {}} />
+      <PromptCardList data={filteredPosts} handleTagClick={handleTagClick} />
     </section>
   );
 }

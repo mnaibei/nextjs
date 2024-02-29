@@ -3,6 +3,9 @@ const nextConfig = {
   images: {
     domains: ["lh3.googleusercontent.com"],
   },
+  experimental: {
+    missingSuspenseWithCSRBailout: false,
+  },
 };
 
 export default nextConfig;
