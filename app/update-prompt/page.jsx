@@ -1,46 +1,40 @@
 "use client";
+
+import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState, useEffect } from "react";
+
 import Form from "@components/Form";
 
-const EditPromptPage = () => {
+const UpdatePrompt = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const promptId = searchParams.get("id");
 
-  const [submitting, setSubmitting] = useState(false);
-  const [post, setPost] = useState({
-    prompt: "",
-    tag: "",
-  });
+  const [post, setPost] = useState({ prompt: "", tag: "", });
+  const [submitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
-    if (typeof window === "undefined") return;
-    if (!promptId) return;
     const getPromptDetails = async () => {
-      try {
-        const res = await fetch(`/api/prompt/${promptId}`);
-        const data = await res.json();
-        setPost({
-          prompt: data.prompt,
-          tag: data.tag,
-        });
-      } catch (error) {
-        console.log(error);
-      }
+      const response = await fetch(`/api/prompt/${promptId}`);
+      const data = await response.json();
+
+      setPost({
+        prompt: data.prompt,
+        tag: data.tag,
+      });
     };
 
     if (promptId) getPromptDetails();
   }, [promptId]);
 
-  const editPrompt = async (e) => {
+  const updatePrompt = async (e) => {
     e.preventDefault();
-    setSubmitting(true);
+    setIsSubmitting(true);
 
-    if (!promptId) return alert("Prompt not found");
+    if (!promptId) return alert("Missing PromptId!");
 
     try {
-      const res = await fetch(`/api/prompt/${promptId}`, {
+      const response = await fetch(`/api/prompt/${promptId}`, {
         method: "PATCH",
         body: JSON.stringify({
           prompt: post.prompt,
@@ -48,25 +42,25 @@ const EditPromptPage = () => {
         }),
       });
 
-      if (res.ok) {
+      if (response.ok) {
         router.push("/");
       }
     } catch (error) {
       console.log(error);
     } finally {
-      setSubmitting(false);
+      setIsSubmitting(false);
     }
   };
 
   return (
     <Form
-      type="Update"
+      type='Edit'
       post={post}
       setPost={setPost}
       submitting={submitting}
-      handleSubmit={editPrompt}
+      handleSubmit={updatePrompt}
     />
   );
 };
 
-export default EditPromptPage;
+export default UpdatePrompt;

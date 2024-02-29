@@ -34,7 +34,8 @@
     ".next/types/**/*.ts",
     "app/api/auth/[...nextauth]/route.tsx",
     "components/Nav.tsx",
-    "app/create-prompt/page.tsx"
+    "app/create-prompt/page.tsx",
+    "app/update-prompt/page.jsx"
   ],
   "exclude": [
     "node_modules"
