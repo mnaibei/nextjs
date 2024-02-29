@@ -14,11 +14,24 @@ export default function RootLayout({
   children: React.ReactNode;
   // session?: Session;
 }) {
-  const [darkMode, setDarkMode] = useState(() => {
+  // const [darkMode, setDarkMode] = useState(() => {
+  //   // Get the initial state from localStorage
+  //   const savedMode = localStorage.getItem("darkMode");
+  //   return savedMode ? JSON.parse(savedMode) : false;
+  // });
+
+  // useEffect(() => {
+  //   // Save the state to localStorage whenever it changes
+  //   localStorage.setItem("darkMode", JSON.stringify(darkMode));
+  // }, [darkMode]);
+
+  const [darkMode, setDarkMode] = useState(false);
+
+  useEffect(() => {
     // Get the initial state from localStorage
     const savedMode = localStorage.getItem("darkMode");
-    return savedMode ? JSON.parse(savedMode) : false;
-  });
+    setDarkMode(savedMode ? JSON.parse(savedMode) : false);
+  }, []);
 
   useEffect(() => {
     // Save the state to localStorage whenever it changes
