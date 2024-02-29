@@ -57,7 +57,6 @@ const EditPromptPage = () => {
   };
 
   return (
-    // @ts-ignore
     <Form
       type="Update"
       post={post}
