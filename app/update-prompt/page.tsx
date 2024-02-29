@@ -15,6 +15,8 @@ const EditPromptPage = () => {
   });
 
   useEffect(() => {
+    if (typeof window === "undefined") return;
+    if (!promptId) return;
     const getPromptDetails = async () => {
       try {
         const res = await fetch(`/api/prompt/${promptId}`);
