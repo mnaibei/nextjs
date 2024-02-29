@@ -9,22 +9,9 @@ import { Session } from "next-auth";
 
 export default function RootLayout({
   children,
-}: // session,
-{
+}: {
   children: React.ReactNode;
-  // session?: Session;
 }) {
-  // const [darkMode, setDarkMode] = useState(() => {
-  //   // Get the initial state from localStorage
-  //   const savedMode = localStorage.getItem("darkMode");
-  //   return savedMode ? JSON.parse(savedMode) : false;
-  // });
-
-  // useEffect(() => {
-  //   // Save the state to localStorage whenever it changes
-  //   localStorage.setItem("darkMode", JSON.stringify(darkMode));
-  // }, [darkMode]);
-
   const [darkMode, setDarkMode] = useState(false);
 
   useEffect(() => {

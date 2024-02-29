@@ -32,7 +32,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "app/api/auth/[...nextauth]/route.tsx",
+    "app/api/auth/[...nextauth]/route.ts",
     "components/Nav.tsx",
     "app/create-prompt/page.tsx",
     "app/update-prompt/page.jsx"
