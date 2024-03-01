@@ -25,7 +25,7 @@ const PromptCardList = ({
           />
         ))
       ) : (
-        <p className="dark:text-white">Loading...</p>
+        <p className="dark:text-white flex">Loading...</p>
       )}
     </div>
   );

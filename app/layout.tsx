@@ -5,7 +5,7 @@ import Nav from "@components/Nav";
 import Provider from "@components/Provider";
 import "@styles/globals.css";
 import Head from "next/head";
-import { Session } from "next-auth";
+import Footer from "@components/Footer";
 
 export default function RootLayout({
   children,
@@ -67,6 +67,7 @@ export default function RootLayout({
                   )}
                 </button>
                 {children}
+                <Footer />
               </main>
             </div>
           </Provider>

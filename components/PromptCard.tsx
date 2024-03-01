@@ -28,12 +28,18 @@ const PromptCard = ({
     setTimeout(() => setCopied(""), 2000);
   };
 
+  const navigateToProfile = () => {
+    router.push(`/profile/${post.creator._id}`);
+  };
+
   console.log(post);
 
   return (
     <div className="prompt_card">
       <div className="flex justify-between items-5 gap-5">
-        <div className="flex-1 flex justify-start items-center gap-3 cursor-pointer">
+        <div
+          className="flex-1 flex justify-start items-center gap-3 cursor-pointer"
+          onClick={navigateToProfile}>
           <Image
             src={post.creator.image || "/assets/images/profile.svg"}
             alt="user_image"
