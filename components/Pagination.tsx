@@ -1,4 +1,5 @@
 import React from "react";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 
 interface PaginationProps {
   itemsPerPage: number;
@@ -32,10 +33,10 @@ const Pagination: React.FC<PaginationProps> = ({
 
   return (
     <nav>
-      <ul className="pagination flex">
+      <ul className="pagination flex items-center gap-4 justify-center dark:text-white">
         <li className="page-item">
           <a onClick={handlePrevious} className="page-link">
-            Previous
+            <FaArrowLeft size={20} />
           </a>
         </li>
         {pageNumbers.map((number) => (
@@ -49,7 +50,7 @@ const Pagination: React.FC<PaginationProps> = ({
         ))}
         <li className="page-item">
           <a onClick={handleNext} className="page-link">
-            Next
+            <FaArrowRight size={20} />
           </a>
         </li>
       </ul>
