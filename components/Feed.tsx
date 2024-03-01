@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import PromptCard from "./PromptCard";
+import Pagination from "./Pagination";
 
 const PromptCardList = ({
   data,
@@ -33,6 +34,10 @@ export default function Feed() {
   const [searchText, setSearchText] = useState("");
   const [posts, setPosts] = useState([] as any[]);
   const [filteredPosts, setFilteredPosts] = useState([] as any[]);
+
+  //pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 9;
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchText(e.target.value);
@@ -69,6 +74,16 @@ export default function Feed() {
     setFilteredPosts(filteredData);
   }, [posts, searchText]);
 
+  // Calculate the items for the current page
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = filteredPosts.slice(indexOfFirstItem, indexOfLastItem);
+
+  // Calculate the items for the current page
+  const handlePageChange = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
+  };
+
   return (
     <section className="feed mb-6">
       <form className="relative w-full flex-center">
@@ -81,7 +96,13 @@ export default function Feed() {
           required
         />
       </form>
-      <PromptCardList data={filteredPosts} handleTagClick={handleTagClick} />
+      <PromptCardList data={currentItems} handleTagClick={handleTagClick} />
+      <Pagination
+        itemsPerPage={itemsPerPage}
+        totalItems={filteredPosts.length}
+        currentPage={currentPage}
+        onPageChange={handlePageChange}
+      />
     </section>
   );
 }

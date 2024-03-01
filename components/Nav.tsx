@@ -77,7 +77,7 @@ export default function Nav() {
             {providers &&
               Object.values(providers).map((provider: any) => (
                 <div key={provider.id} className=" flex items-center gap-2">
-                  <p>Sign up / Sign in: </p>
+                  <p>Sign in with: </p>
                   <button
                     key={provider.name}
                     type="button"
@@ -138,7 +138,7 @@ export default function Nav() {
             {providers &&
               Object.values(providers).map((provider: any) => (
                 <div key={provider.id} className=" flex items-center gap-2">
-                  <p>Sign up / Sign in: </p>
+                  <p>Sign in with: </p>
                   <button
                     key={provider.name}
                     type="button"
