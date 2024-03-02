@@ -121,13 +121,13 @@ export default function Feed() {
           required
         />
       </form>
-      <PromptCardList data={currentItems} handleTagClick={handleTagClick} />
-      <Pagination
+      <PromptCardList data={filteredPosts} handleTagClick={handleTagClick} />
+      {/* <Pagination
         itemsPerPage={itemsPerPage}
         totalItems={filteredPosts.length}
         currentPage={currentPage}
         onPageChange={handlePageChange}
-      />
+      /> */}
     </section>
   );
 }
