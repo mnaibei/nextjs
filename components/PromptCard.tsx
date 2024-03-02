@@ -32,8 +32,6 @@ const PromptCard = ({
     router.push(`/profile/${post.creator._id}`);
   };
 
-  console.log(post);
-
   return (
     <div className="prompt_card">
       <div className="flex justify-between items-5 gap-5">

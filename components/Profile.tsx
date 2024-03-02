@@ -13,7 +13,6 @@ const ProfileComponent = ({
   handleEdit: any;
   handleDelete: any;
 }) => {
-  console.log(data);
   const user = data[0]?.creator.username;
   return (
     <section className="w-full">

@@ -47,6 +47,19 @@ export default function Feed() {
     setSearchText(tag);
   };
 
+  // useEffect(() => {
+  //   const fetchPosts = async () => {
+  //     try {
+  //       const res = await fetch("/api/prompt");
+  //       const data = await res.json();
+  //       setPosts(data);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
+  //   fetchPosts();
+  // }, []);
+
   useEffect(() => {
     const fetchPosts = async () => {
       try {
@@ -57,8 +70,20 @@ export default function Feed() {
         console.log(error);
       }
     };
+
+    // Fetch data initially when component mounts
     fetchPosts();
+
+    console.log("fetching posts...");
+
+    // Poll for new data every 30 seconds (adjust interval as needed)
+    const intervalId = setInterval(fetchPosts, 30000);
+
+    // Clean up interval when component unmounts
+    return () => clearInterval(intervalId);
   }, []);
+
+  console.log("posts fetched", posts);
 
   useEffect(() => {
     const filteredData = posts.filter((post) => {
