@@ -15,8 +15,8 @@ export const connectToDatabase = async () => {
       process.env.MONGO_URI as string,
       {
         dbName: "sharepromptDB",
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
+        // useNewUrlParser: true,
+        // useUnifiedTopology: true,
       } as ConnectOptions
     );
     isConnected = true;

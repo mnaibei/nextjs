@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
-import PromptCard from "./PromptCard";
-import Pagination from "./Pagination";
+import PromptCard from "@components/PromptCard";
+import Pagination from "@components/Pagination";
 
 const PromptCardList = ({
   data,
@@ -10,7 +10,7 @@ const PromptCardList = ({
   data: any[];
   handleTagClick: (tag: string) => void;
 }) => {
-  console.log("data that should be showing on home page", data);
+  // console.log("data that should be showing on home page", data);
   return (
     <div className="mt-16 prompt_layout">
       {data.length > 0 ? (
@@ -69,11 +69,17 @@ export default function Feed() {
       cache: "no-store",
     });
     const data = await response.json();
+    console.log("Data fetched from the database:", data);
     setPosts(data);
   };
 
   useEffect(() => {
-    fetchPosts();
+    fetchPosts(); // Fetch posts immediately on component mount
+    const intervalId = setInterval(fetchPosts, 2000); // Fetch posts every 5 seconds
+
+    return () => {
+      clearInterval(intervalId); // Clean up interval on component unmount
+    };
   }, []);
 
   // useEffect(() => {
