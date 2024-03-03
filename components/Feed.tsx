@@ -34,6 +34,7 @@ export default function Feed() {
   const [searchText, setSearchText] = useState("");
   const [posts, setPosts] = useState([] as any[]);
   const [filteredPosts, setFilteredPosts] = useState([] as any[]);
+  const [loading, setLoading] = useState(false);
 
   //pagination
   const [currentPage, setCurrentPage] = useState(1);
@@ -47,17 +48,30 @@ export default function Feed() {
     setSearchText(tag);
   };
 
+  // useEffect(() => {
+  //   const fetchPosts = async () => {
+  //     try {
+  //       const res = await fetch("/api/prompt");
+  //       const data = await res.json();
+  //       setPosts(data);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
+  //   fetchPosts();
+  // }, []);
+
   useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const res = await fetch("/api/prompt");
-        const data = await res.json();
+    setLoading(true);
+    fetch("/api/prompt", {
+      cache: "no-store",
+    })
+      .then((res) => res.json())
+      .then((data) => {
         setPosts(data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchPosts();
+        setLoading(false);
+        console.log(data);
+      });
   }, []);
 
   // useEffect(() => {
