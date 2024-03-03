@@ -29,7 +29,6 @@ const CreatePromptPage = () => {
 
       if (res.ok) {
         router.push("/");
-        window.location.reload(); // Temporary fix to refresh the page
       }
     } catch (error) {
       console.log(error);

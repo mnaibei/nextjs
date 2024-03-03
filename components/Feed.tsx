@@ -48,21 +48,35 @@ export default function Feed() {
     setSearchText(tag);
   };
 
-  useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const res = await fetch("/api/prompt", {
-          cache: "no-store", // Prevent caching
-        });
-        const data = await res.json();
-        setPosts(data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchPosts = async () => {
+  //     try {
+  //       const res = await fetch("/api/prompt", {
+  //         cache: "no-store", // Prevent caching
+  //       });
+  //       const data = await res.json();
+  //       setPosts(data);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
 
+  //   fetchPosts();
+  // }, []);
+
+  const fetchPosts = async () => {
+    const response = await fetch("/api/prompt", {
+      cache: "no-store",
+    });
+    const data = await response.json();
+    setPosts(data);
+  };
+
+  useEffect(() => {
     fetchPosts();
   }, []);
+
+  console.log("fetchPosts", fetchPosts);
 
   // useEffect(() => {
   //   setLoading(true);
