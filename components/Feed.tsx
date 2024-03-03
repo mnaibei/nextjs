@@ -48,56 +48,34 @@ export default function Feed() {
     setSearchText(tag);
   };
 
-  // useEffect(() => {
-  //   const fetchPosts = async () => {
-  //     try {
-  //       const res = await fetch("/api/prompt");
-  //       const data = await res.json();
-  //       setPosts(data);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
-  //   fetchPosts();
-  // }, []);
-
   useEffect(() => {
-    setLoading(true);
-    fetch("/api/prompt", {
-      cache: "no-store",
-    })
-      .then((res) => res.json())
-      .then((data) => {
+    const fetchPosts = async () => {
+      try {
+        const res = await fetch("/api/prompt", {
+          cache: "no-store", // Prevent caching
+        });
+        const data = await res.json();
         setPosts(data);
-        setLoading(false);
-        console.log(data);
-      });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchPosts();
   }, []);
 
   // useEffect(() => {
-  //   const fetchPosts = async () => {
-  //     try {
-  //       const res = await fetch("/api/prompt");
-  //       const data = await res.json();
+  //   setLoading(true);
+  //   fetch("/api/prompt", {
+  //     cache: "no-store",
+  //   })
+  //     .then((res) => res.json())
+  //     .then((data) => {
   //       setPosts(data);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
-
-  //   // Fetch data initially when component mounts
-  //   fetchPosts();
-
-  //   console.log("fetching posts...");
-
-  //   // Poll for new data every 30 seconds (adjust interval as needed)
-  //   const intervalId = setInterval(fetchPosts, 30000);
-
-  //   // Clean up interval when component unmounts
-  //   return () => clearInterval(intervalId);
+  //       setLoading(false);
+  //       console.log(data);
+  //     });
   // }, []);
-
-  // console.log("posts fetched", posts);
 
   useEffect(() => {
     const filteredData = posts.filter((post) => {

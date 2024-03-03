@@ -44,6 +44,7 @@ const UpdatePrompt = () => {
 
       if (response.ok) {
         router.push("/");
+        window.location.reload(); // Force a reload to update the prompt list
       }
     } catch (error) {
       console.log(error);
