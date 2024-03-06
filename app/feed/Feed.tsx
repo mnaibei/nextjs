@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
-import PromptCard from "./PromptCard";
-import Pagination from "./Pagination";
+import PromptCard from "@components/PromptCard";
+import Pagination from "@components/Pagination";
 
 const PromptCardList = ({
   data,
@@ -10,7 +10,7 @@ const PromptCardList = ({
   data: any[];
   handleTagClick: (tag: string) => void;
 }) => {
-  console.log("data that should be showing on home page", data);
+  // console.log("data that should be showing on home page", data);
   return (
     <div className="mt-16 prompt_layout">
       {data.length > 0 ? (
@@ -34,6 +34,7 @@ export default function Feed() {
   const [searchText, setSearchText] = useState("");
   const [posts, setPosts] = useState([] as any[]);
   const [filteredPosts, setFilteredPosts] = useState([] as any[]);
+  const [loading, setLoading] = useState(false);
 
   //pagination
   const [currentPage, setCurrentPage] = useState(1);
@@ -47,23 +48,12 @@ export default function Feed() {
     setSearchText(tag);
   };
 
-  useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const res = await fetch("/api/prompt");
-        const data = await res.json();
-        setPosts(data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchPosts();
-  }, []);
-
   // useEffect(() => {
   //   const fetchPosts = async () => {
   //     try {
-  //       const res = await fetch("/api/prompt");
+  //       const res = await fetch("/api/prompt", {
+  //         cache: "no-store", // Prevent caching
+  //       });
   //       const data = await res.json();
   //       setPosts(data);
   //     } catch (error) {
@@ -71,19 +61,39 @@ export default function Feed() {
   //     }
   //   };
 
-  //   // Fetch data initially when component mounts
   //   fetchPosts();
-
-  //   console.log("fetching posts...");
-
-  //   // Poll for new data every 30 seconds (adjust interval as needed)
-  //   const intervalId = setInterval(fetchPosts, 30000);
-
-  //   // Clean up interval when component unmounts
-  //   return () => clearInterval(intervalId);
   // }, []);
 
-  // console.log("posts fetched", posts);
+  const fetchPosts = async () => {
+    const response = await fetch("/api/prompt", {
+      cache: "no-store",
+    });
+    const data = await response.json();
+    console.log("Data fetched from the database:", data);
+    setPosts(data);
+  };
+
+  useEffect(() => {
+    fetchPosts(); // Fetch posts immediately on component mount
+    const intervalId = setInterval(fetchPosts, 2000); // Fetch posts every 5 seconds
+
+    return () => {
+      clearInterval(intervalId); // Clean up interval on component unmount
+    };
+  }, []);
+
+  // useEffect(() => {
+  //   setLoading(true);
+  //   fetch("/api/prompt", {
+  //     cache: "no-store",
+  //   })
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       setPosts(data);
+  //       setLoading(false);
+  //       console.log(data);
+  //     });
+  // }, []);
 
   useEffect(() => {
     const filteredData = posts.filter((post) => {

@@ -36,7 +36,8 @@
     "components/Nav.tsx",
     "app/create-prompt/page.tsx",
     "app/update-prompt/page.jsx",
-    "app/profile/[id]/page.jsx"
+    "app/profile/[id]/page.jsx",
+    "app/feed/feed.js"
   ],
   "exclude": [
     "node_modules"
