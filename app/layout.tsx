@@ -63,7 +63,7 @@ export default function RootLayout({
                       size={30}
                       color="black"
                       className="border-2 border-[#06304d] rounded-full p-1"
-                    /> // Change color to black when darkMode is false
+                    /> // Change color to black when darkMode is fals
                   )}
                 </button>
                 {children}
