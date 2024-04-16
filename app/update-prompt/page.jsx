@@ -1,24 +1,27 @@
 "use client";
 import { useEffect, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import Form from "@components/Form";
 import { Suspense } from "react";
 
-// Custom Suspense boundary component
-const SuspenseBoundary = ({ children }) => {
-  const [ready, setReady] = useState(false);
-
-  useEffect(() => {
-    setReady(true);
-  }, []);
-
-  return ready ? <>{children}</> : <p>Loading...</p>;
-};
-
 const UpdatePrompt = () => {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const promptId = searchParams.get("id");
+  // const searchParams = useSearchParams();
+  // const promptId = searchParams.get("id");
+
+  const [promptId, setPromptId] = useState(null);
+
+  useEffect(() => {
+    // Retrieve the query parameter after the component mounts
+    const searchParams = new URLSearchParams(window.location.search);
+    const queryId = searchParams.get('id');
+    if (queryId) {
+      setPromptId(queryId);
+    }
+  }, []);
+
+  console.log(promptId);
+
 
   const [post, setPost] = useState({ prompt: "", tag: "" });
   const [submitting, setIsSubmitting] = useState(false);
@@ -65,18 +68,20 @@ const UpdatePrompt = () => {
     }
   };
 
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
+
   return (
-    <SuspenseBoundary> {/* Use the custom Suspense boundary */}
-      <Suspense fallback={<p>Loading...</p>}>
-        <Form
-          type="Edit"
-          post={post}
-          setPost={setPost}
-          submitting={submitting}
-          handleSubmit={updatePrompt}
-        />
-      </Suspense>
-    </SuspenseBoundary>
+    <Suspense fallback={<p>Loading...</p>}>
+      <Form
+        type="Edit"
+        post={post}
+        setPost={setPost}
+        submitting={submitting}
+        handleSubmit={updatePrompt}
+      />
+    </Suspense>
   );
 };
 
