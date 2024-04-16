@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import ProfileComponent from "@components/Profile";
+import { Suspense } from "react";
 
 const Profile = () => {
   const router = useRouter();
@@ -31,7 +32,7 @@ const Profile = () => {
     };
 
     fetchPosts();
-  }, [(session?.user as any)?.id]);
+  }, [session?.user]);
 
   console.log(posts);
 
@@ -58,13 +59,15 @@ const Profile = () => {
 
   return (
     <div>
-      <ProfileComponent
-        name="My"
-        desc="This is my profile"
-        data={posts}
-        handleEdit={handleEdit}
-        handleDelete={handleDelete}
-      />
+      <Suspense fallback={<p>Loading...</p>}>
+        <ProfileComponent
+          name="My"
+          desc="This is my profile"
+          data={posts}
+          handleEdit={handleEdit}
+          handleDelete={handleDelete}
+        />
+      </Suspense>
     </div>
   );
 };
