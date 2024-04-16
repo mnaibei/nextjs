@@ -4,6 +4,17 @@ import { useRouter, useSearchParams } from "next/navigation";
 import Form from "@components/Form";
 import { Suspense } from "react";
 
+// Custom Suspense boundary component
+const SuspenseBoundary = ({ children }) => {
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    setReady(true);
+  }, []);
+
+  return ready ? <>{children}</> : <p>Loading...</p>;
+};
+
 const UpdatePrompt = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -54,20 +65,18 @@ const UpdatePrompt = () => {
     }
   };
 
-  if (isLoading) {
-    return <p>Loading...</p>;
-  }
-
   return (
-    <Suspense fallback={<p>Loading...</p>}>
-      <Form
-        type="Edit"
-        post={post}
-        setPost={setPost}
-        submitting={submitting}
-        handleSubmit={updatePrompt}
-      />
-    </Suspense>
+    <SuspenseBoundary> {/* Use the custom Suspense boundary */}
+      <Suspense fallback={<p>Loading...</p>}>
+        <Form
+          type="Edit"
+          post={post}
+          setPost={setPost}
+          submitting={submitting}
+          handleSubmit={updatePrompt}
+        />
+      </Suspense>
+    </SuspenseBoundary>
   );
 };
 
