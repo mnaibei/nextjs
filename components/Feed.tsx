@@ -14,7 +14,7 @@ const PromptCardList = ({
   data: any[];
   handleTagClick: (tag: string) => void;
 }) => {
-  console.log("data that should be showing on home page", data);
+  // console.log("data that should be showing on home page", data);
   return (
     <div className="mt-16 prompt_layout">
       {data.length > 0 ? (
