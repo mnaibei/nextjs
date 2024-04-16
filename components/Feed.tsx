@@ -1,7 +1,11 @@
 "use client";
 import { useState, useEffect } from "react";
 import PromptCard from "./PromptCard";
+import useSWR from "swr"; // Import useSWR hook
+import { Suspense } from "react";
 import Pagination from "./Pagination";
+
+const fetcher = (url: any) => fetch(url).then((res) => res.json()); // Define fetcher function
 
 const PromptCardList = ({
   data,
@@ -30,14 +34,13 @@ const PromptCardList = ({
     </div>
   );
 };
+
 export default function Feed() {
   const [searchText, setSearchText] = useState("");
-  const [posts, setPosts] = useState([] as any[]);
-  const [filteredPosts, setFilteredPosts] = useState([] as any[]);
 
   //pagination
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 9;
+  const itemsPerPage = 8;
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchText(e.target.value);
@@ -47,57 +50,20 @@ export default function Feed() {
     setSearchText(tag);
   };
 
-  useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const res = await fetch("/api/prompt");
-        const data = await res.json();
-        setPosts(data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchPosts();
-  }, []);
+  // Fetch data using useSWR with Suspense support
+  const { data: posts } = useSWR("/api/prompt", fetcher);
 
-  // useEffect(() => {
-  //   const fetchPosts = async () => {
-  //     try {
-  //       const res = await fetch("/api/prompt");
-  //       const data = await res.json();
-  //       setPosts(data);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
-
-  //   // Fetch data initially when component mounts
-  //   fetchPosts();
-
-  //   console.log("fetching posts...");
-
-  //   // Poll for new data every 30 seconds (adjust interval as needed)
-  //   const intervalId = setInterval(fetchPosts, 30000);
-
-  //   // Clean up interval when component unmounts
-  //   return () => clearInterval(intervalId);
-  // }, []);
-
-  // console.log("posts fetched", posts);
-
-  useEffect(() => {
-    const filteredData = posts.filter((post) => {
-      // Check if the search text matches the tag, username, or content
-      return (
-        post.tag.toLowerCase().includes(searchText.toLowerCase()) ||
-        post.creator.username
-          .toLowerCase()
-          .includes(searchText.toLowerCase()) ||
-        post.prompt.toLowerCase().includes(searchText.toLowerCase())
-      );
-    });
-    setFilteredPosts(filteredData);
-  }, [posts, searchText]);
+  const filteredPosts = posts
+    ? posts.filter((post: any) => {
+        return (
+          post.tag.toLowerCase().includes(searchText.toLowerCase()) ||
+          post.creator.username
+            .toLowerCase()
+            .includes(searchText.toLowerCase()) ||
+          post.prompt.toLowerCase().includes(searchText.toLowerCase())
+        );
+      })
+    : [];
 
   // Calculate the items for the current page
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -105,9 +71,9 @@ export default function Feed() {
   const currentItems = filteredPosts.slice(indexOfFirstItem, indexOfLastItem);
 
   // Calculate the items for the current page
-  // const handlePageChange = (pageNumber: number) => {
-  //   setCurrentPage(pageNumber);
-  // };
+  const handlePageChange = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
+  };
 
   return (
     <section className="feed mb-6">
@@ -121,13 +87,15 @@ export default function Feed() {
           required
         />
       </form>
-      <PromptCardList data={filteredPosts} handleTagClick={handleTagClick} />
-      {/* <Pagination
-        itemsPerPage={itemsPerPage}
-        totalItems={filteredPosts.length}
-        currentPage={currentPage}
-        onPageChange={handlePageChange}
-      /> */}
+      <Suspense fallback={<p className="dark:text-white flex">Loading...</p>}>
+        <PromptCardList data={currentItems} handleTagClick={handleTagClick} />
+        <Pagination
+          itemsPerPage={itemsPerPage}
+          totalItems={filteredPosts.length}
+          currentPage={currentPage}
+          onPageChange={handlePageChange}
+        />
+      </Suspense>
     </section>
   );
 }
