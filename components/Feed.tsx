@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import PromptCard from "./PromptCard";
 import useSWR from "swr"; // Import useSWR hook
 import { Suspense } from "react";
+import Pagination from "./Pagination";
 
 const fetcher = (url: any) => fetch(url).then((res) => res.json()); // Define fetcher function
 
@@ -37,6 +38,10 @@ const PromptCardList = ({
 export default function Feed() {
   const [searchText, setSearchText] = useState("");
 
+  //pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 8;
+
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchText(e.target.value);
   };
@@ -60,6 +65,16 @@ export default function Feed() {
       })
     : [];
 
+  // Calculate the items for the current page
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = filteredPosts.slice(indexOfFirstItem, indexOfLastItem);
+
+  // Calculate the items for the current page
+  const handlePageChange = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
+  };
+
   return (
     <section className="feed mb-6">
       <form className="relative w-full flex-center">
@@ -73,7 +88,13 @@ export default function Feed() {
         />
       </form>
       <Suspense fallback={<p className="dark:text-white flex">Loading...</p>}>
-        <PromptCardList data={filteredPosts} handleTagClick={handleTagClick} />
+        <PromptCardList data={currentItems} handleTagClick={handleTagClick} />
+        <Pagination
+          itemsPerPage={itemsPerPage}
+          totalItems={filteredPosts.length}
+          currentPage={currentPage}
+          onPageChange={handlePageChange}
+        />
       </Suspense>
     </section>
   );
