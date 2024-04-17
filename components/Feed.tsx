@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import PromptCard from "./PromptCard";
-import useSWR from "swr"; // Import useSWR hook
+import useSWR, { SWRConfig } from "swr"; // Import useSWR hook
 import { Suspense } from "react";
 import Pagination from "./Pagination";
 
@@ -29,7 +29,7 @@ const PromptCardList = ({
           />
         ))
       ) : (
-        <p className="dark:text-white flex">Loading...</p>
+        <p className="dark:text-white flex">No posts found.</p>
       )}
     </div>
   );
@@ -51,7 +51,11 @@ export default function Feed() {
   };
 
   // Fetch data using useSWR with Suspense support
-  const { data: posts } = useSWR("/api/prompt", fetcher);
+  const { data: posts, error } = useSWR("/api/prompt", fetcher);
+
+  if (error) {
+    return <p>Error fetching data.</p>;
+  }
 
   const filteredPosts = posts
     ? posts.filter((post: any) => {
