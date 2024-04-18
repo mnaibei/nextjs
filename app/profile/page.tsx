@@ -10,10 +10,6 @@ const Profile = () => {
   const { data: session } = useSession();
   const [posts, setPosts] = useState([]);
 
-  console.log((session?.user as any)?.id);
-  //@ts-ignore
-  console.log(session?.user?.id);
-
   useEffect(() => {
     const fetchPosts = async () => {
       if (!(session?.user as any)?.id) {
@@ -33,8 +29,6 @@ const Profile = () => {
 
     fetchPosts();
   }, [session?.user]);
-
-  console.log(posts);
 
   const handleEdit = (post: any) => {
     router.push(`/update-prompt?id=${post._id}`);

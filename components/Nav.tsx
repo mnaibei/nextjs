@@ -28,7 +28,9 @@ export default function Nav() {
           height={30}
           className="object-contain"
         />
-        <h1 className="logo_text dark:text-white">Prompt Finder</h1>
+        <h1 className="logo_text dark:text-white">
+          Prompt Hub: Share & Discover
+        </h1>
       </Link>
       <div className="sm:flex hidden">
         {session?.user ? (

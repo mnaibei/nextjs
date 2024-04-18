@@ -1,5 +1,4 @@
-"use client";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { useRouter, usePathname } from "next/navigation";
@@ -18,6 +17,7 @@ const PromptCard = ({
   handleDelete: any;
 }) => {
   const [copied, setCopied] = useState("");
+  const [expanded, setExpanded] = useState(false); // State to track if card is expanded
   const { data: session } = useSession();
   const pathName = usePathname();
   const router = useRouter();
@@ -32,8 +32,15 @@ const PromptCard = ({
     router.push(`/profile/${post.creator._id}`);
   };
 
+  const toggleExpand = () => {
+    setExpanded((prevExpanded) => !prevExpanded); // Toggle expand state
+  };
+
   return (
-    <div className="prompt_card">
+    <div
+      className={`prompt_card cursor-pointer ${expanded ? "expanded" : ""}`}
+      onClick={toggleExpand} // Toggle expand on click
+    >
       <div className="flex justify-between items-5 gap-5">
         <div
           className="flex-1 flex justify-start items-center gap-3 cursor-pointer"
@@ -46,10 +53,10 @@ const PromptCard = ({
             className="rounded-full bg-white"
           />
           <div className="flex flex-col w-full">
-            <h2 className=" font-satoshi text-gray-900 font-semibold dark:text-white">
+            <h2 className="font-satoshi text-gray-900 font-semibold dark:text-white">
               {post.creator.username}
             </h2>
-            <p className="text-xs font-inter text-gray-500 dark:text-white ">
+            <p className="text-xs font-inter text-gray-500 dark:text-white">
               created: {new Date(post.createdAt).toLocaleDateString()}
             </p>
           </div>
@@ -67,11 +74,18 @@ const PromptCard = ({
           />
         </div>
       </div>
-      <p className="my-4 font-satoshi text-sm text-gray-700 dark:text-white">
-        {post.prompt}
+      <p
+        className={`prompt-text ${
+          expanded ? "expanded" : ""
+        } dark:text-white break-words mt-3`}>
+        {post.prompt.length < 100
+          ? post.prompt // Show full text if length is less than 100
+          : expanded
+          ? post.prompt
+          : `${post.prompt.substring(0, 100)}...`}
       </p>
       <p
-        className="font-inter text-sm blue_gradient cursor-pointer dark:text-blue-500"
+        className="font-inter text-sm blue_gradient cursor-pointer dark:text-blue-500 mt-3"
         onClick={() => handleTagClick && handleTagClick(post.tag)}>
         {post.tag}
       </p>
@@ -93,4 +107,5 @@ const PromptCard = ({
     </div>
   );
 };
+
 export default PromptCard;

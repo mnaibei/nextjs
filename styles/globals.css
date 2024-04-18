@@ -4,7 +4,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* 
+/*
   Note: The styles for this gradient grid background is heavily inspired by the creator of this amazing site (https://dub.sh) – all credits go to them! 
 */
 
@@ -27,6 +27,31 @@
 .page-link {
     cursor: pointer;
 }
+
+.prompt_card {
+    /* Set initial size */
+    min-height: 100px;
+    overflow: hidden;
+}
+
+.prompt-text {
+    white-space: wrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.prompt_card.expanded {
+    /* Expand card when expanded state is true */
+    max-height: none;
+}
+
+.prompt_card.expanded .prompt-text {
+    /* Show full text when card is expanded */
+    white-space: normal;
+    overflow: visible;
+    text-overflow: clip;
+}
+
 
 .active {
     font-weight: bold;

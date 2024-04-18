@@ -6,9 +6,6 @@ import { Suspense } from "react";
 
 const UpdatePrompt = () => {
   const router = useRouter();
-  // const searchParams = useSearchParams();
-  // const promptId = searchParams.get("id");
-
   const [promptId, setPromptId] = useState(null);
 
   useEffect(() => {
@@ -19,9 +16,6 @@ const UpdatePrompt = () => {
       setPromptId(queryId);
     }
   }, []);
-
-  console.log(promptId);
-
 
   const [post, setPost] = useState({ prompt: "", tag: "" });
   const [submitting, setIsSubmitting] = useState(false);
