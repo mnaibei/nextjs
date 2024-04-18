@@ -32,7 +32,7 @@ export default function RootLayout({
   return (
     <>
       <Head>
-        <title>Prompt Finder</title>
+        <title>Prompt Hub: Share & Discover</title>
         <meta name="description" content="Find writing prompts" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
