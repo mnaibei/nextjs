@@ -81,7 +81,7 @@ export default function Feed() {
 
   return (
     <section className="feed mb-6">
-      <form className="relative w-full flex-center">
+      <form className="relative w-full flex-center items-center">
         <input
           type="text"
           className="search_input peer"
@@ -90,6 +90,14 @@ export default function Feed() {
           onChange={handleSearchChange}
           required
         />
+        {searchText && (
+          <button
+            type="button"
+            className="absolute right-0 top-0 mt-2 mr-4 text-sm"
+            onClick={() => setSearchText("")}>
+            X
+          </button>
+        )}
       </form>
       <Suspense fallback={<p className="dark:text-white flex">Loading...</p>}>
         <PromptCardList data={currentItems} handleTagClick={handleTagClick} />
