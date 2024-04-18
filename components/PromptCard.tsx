@@ -57,7 +57,12 @@ const PromptCard = ({
               {post.creator.username}
             </h2>
             <p className="text-xs font-inter text-gray-500 dark:text-white">
-              created: {new Date(post.createdAt).toLocaleDateString()}
+              created:{" "}
+              {new Date(post.createdAt).toLocaleDateString("en-GB", {
+                day: "2-digit",
+                month: "2-digit",
+                year: "numeric",
+              })}
             </p>
           </div>
         </div>
