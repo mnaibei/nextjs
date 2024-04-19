@@ -22,13 +22,15 @@ export default function Nav() {
     <nav className="flex-between w-full mb-16 pt-3 dark:text-white">
       <Link href="/" className="flex gap-2 flex-center">
         <Image
-          src="/assets/images/logo.svg"
+          src="/assets/images/prompt.svg"
           alt="logo"
           width={30}
           height={30}
-          className="object-contain"
+          className="object-contain dark:invert dark:filter dark:grayscale dark:contrast-100 dark:opacity-100"
         />
-        <h1 className="logo_text dark:text-white">Prompt Finder</h1>
+        <h1 className="logo_text dark:text-white">
+          Prompt Hub: Share & Discover
+        </h1>
       </Link>
       <div className="sm:flex hidden">
         {session?.user ? (
